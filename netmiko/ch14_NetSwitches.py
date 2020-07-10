@@ -1,4 +1,5 @@
 from netmiko import ConnectHandler
+import time
 
 iosv_l2_s1 = {
     'device_type': 'cisco_ios',
@@ -8,6 +9,7 @@ iosv_l2_s1 = {
     'secret' : 'cisco',
     'verbose' : True,
 }
+
 iosv_l2_s2 = {
     'device_type': 'cisco_ios',
     'ip': '192.168.122.72',
@@ -48,9 +50,11 @@ with open('iosv_l2_config1') as file:
     lines = file.read().splitlines()
 print(lines)
 
-all_devices = [iosv_l2_s1, iosv_l2_s2, iosv_l2_s3, iosv_l2_s4, iosv_l2_s5]
+all_devices = [iosv_l2_s5, iosv_l2_s4, iosv_l2_s3, iosv_l2_s2, iosv_l2_s1]
 
 for devices in all_devices:
     net_connect = ConnectHandler(**devices)
     net_connect.enable()
     output = net_connect.send_config_set(lines)
+    print(output)
+    time.sleep(1)
